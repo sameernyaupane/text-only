@@ -1,0 +1,475 @@
+/* Theme tokens, same scheme as simple-auto-hd: base :root is dark; the media
+   query covers the moment before popup.js stamps data-theme on <html>. */
+:root {
+  color-scheme: dark;
+  --bg: #1f2328;
+  --surface: #282d34;
+  --surface-hover: #2f353d;
+  --border: #3a414b;
+  --text: #e8ebef;
+  --muted: #99a3b0;
+  --accent: #3ea6ff;
+  --accent-text: #06121f;
+  --track: #4a515b;
+  --danger: #f87171;
+  --ok: #4ade80;
+  --wait: #fbbf24;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #f6f7f9;
+    --surface-hover: #eef0f3;
+    --border: #dfe3e8;
+    --text: #1a1d21;
+    --muted: #5f6874;
+    --accent: #1567c8;
+    --accent-text: #ffffff;
+    --track: #c5cad1;
+    --danger: #dc2626;
+    --ok: #15803d;
+    --wait: #b45309;
+    --shadow: rgba(0, 0, 0, 0.12);
+  }
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #f6f7f9;
+  --surface-hover: #eef0f3;
+  --border: #dfe3e8;
+  --text: #1a1d21;
+  --muted: #5f6874;
+  --accent: #1567c8;
+  --accent-text: #ffffff;
+  --track: #c5cad1;
+  --danger: #dc2626;
+  --ok: #15803d;
+  --wait: #b45309;
+  --shadow: rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 288px;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  cursor: default;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Full-page mode (chrome://extensions -> Details -> Extension options):
+   center the same popup layout instead of stretching it. */
+body.as-page {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 12px;
+}
+
+body.as-page > * {
+  width: 288px;
+}
+
+/* ---------------------------------------------------------------- header */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 2px 12px;
+}
+
+.header__logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  flex: none;
+}
+
+.header__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.header__name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.header__version {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- cards */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.card--master {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.row,
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+}
+
+.field {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.row + .row,
+.field + .row,
+.row + .field,
+.field + .field {
+  border-top: 1px solid var(--border);
+}
+
+/* .row/.field force display:flex, which would beat the UA [hidden] rule. */
+.row[hidden],
+.field[hidden] {
+  display: none;
+}
+
+.row__label {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.row__title {
+  font-weight: 500;
+}
+
+.row__hint {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* Master off dims everything below it. */
+body.is-disabled #settings,
+body.is-disabled .card--list {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------- site list card */
+
+.field--add {
+  padding-bottom: 10px;
+}
+
+.add-row {
+  display: flex;
+  gap: 6px;
+}
+
+.add-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 10px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+}
+
+.add-row input::placeholder {
+  color: var(--muted);
+}
+
+.add-row input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.add-row button {
+  flex: none;
+  padding: 7px 12px;
+  font: inherit;
+  font-weight: 500;
+  color: var(--accent-text);
+  background: var(--accent);
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.add-row button:hover {
+  filter: brightness(1.08);
+}
+
+.add-row button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.site-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 168px;
+  overflow-y: auto;
+}
+
+.site-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 12px;
+  font-size: 12px;
+}
+
+.site-list li + li,
+.site-list li:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.site-list li:first-child {
+  border-top: none;
+}
+
+.site-list .site-host {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.site-list .site-remove {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.site-list .site-remove:hover {
+  color: var(--danger);
+  background: var(--surface-hover);
+}
+
+.site-list .site-remove:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.site-empty {
+  margin: 0;
+  padding: 2px 12px 10px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- switch */
+
+.switch {
+  position: relative;
+  flex: none;
+  width: 38px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.switch__track {
+  position: absolute;
+  inset: 0;
+  background: var(--track);
+  border-radius: 999px;
+  transition: background-color 0.16s ease;
+  pointer-events: none;
+}
+
+.switch__track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px var(--shadow);
+  transition: transform 0.16s ease;
+}
+
+.switch input:checked + .switch__track {
+  background: var(--accent);
+}
+
+.switch input:checked + .switch__track::after {
+  transform: translateX(16px);
+}
+
+.switch input:focus-visible + .switch__track,
+.segmented input:focus-visible + label,
+.add-row button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------- segmented control */
+
+.segmented {
+  display: flex;
+  flex: none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmented label {
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.segmented label:hover {
+  color: var(--text);
+}
+
+.segmented input:checked + label {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+/* ---------------------------------------------------------------- status */
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 10px 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.status__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex: none;
+}
+
+.status[data-state='ok'] .status__dot {
+  background: var(--ok);
+}
+
+.status[data-state='ok'] .status__text {
+  color: var(--text);
+}
+
+.status[data-state='waiting'] .status__dot {
+  background: var(--wait);
+}
+
+/* ---------------------------------------------------------------- footer */
+
+.footer {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.footer__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  padding: 7px 6px;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: 7px;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.footer__link:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.footer__icon {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

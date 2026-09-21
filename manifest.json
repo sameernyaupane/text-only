@@ -1,0 +1,52 @@
+{
+	"manifest_version": 3,
+	"name": "Text Only",
+	"description": "Browse the web as plain text. On for every site by default with exclusions, or off everywhere with a whitelist.",
+	"version": "1.0.0",
+	"minimum_chrome_version": "111",
+
+	"icons": {
+		"16": "icons/icon16.png",
+		"48": "icons/icon48.png",
+		"128": "icons/icon128.png"
+	},
+
+	"action": {
+		"default_title": "Text Only",
+		"default_icon": {
+			"16": "icons/icon16.png",
+			"32": "icons/icon32.png"
+		},
+		"default_popup": "popup.html"
+	},
+
+	"options_ui": {
+		"page": "popup.html",
+		"open_in_tab": true
+	},
+
+	"background": {
+		"service_worker": "background.js"
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content.js"],
+			"css": ["content.css"],
+			"run_at": "document_start",
+			"all_frames": true
+		}
+	],
+
+	"permissions": ["storage", "declarativeNetRequest", "contextMenus", "activeTab"],
+
+	"host_permissions": ["<all_urls>"],
+
+	"web_accessible_resources": [
+		{
+			"resources": ["assets/blank.png"],
+			"matches": ["<all_urls>"]
+		}
+	]
+}
