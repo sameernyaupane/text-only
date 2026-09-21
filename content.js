@@ -15,7 +15,7 @@ const DATA_IMG_SEL = 'img[src^="data:"], img[src^="blob:"]';
 const MEDIA_SEL = `${DATA_IMG_SEL}, svg, video`;
 
 function setDataAttribute() {
-  document.documentElement.dataset.textMode = state.active ? 'on' : 'off';
+  document.documentElement.dataset.textOnly = state.active ? 'on' : 'off';
 }
 
 function scrubOne(el) {
