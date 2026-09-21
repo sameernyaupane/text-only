@@ -90,8 +90,8 @@ function renderList() {
   $('mode-all').checked = excluding;
   $('mode-none').checked = !excluding;
   els.modeHint.textContent = excluding
-    ? 'Text mode is on everywhere except the list below.'
-    : 'Text mode is off everywhere except the list below.';
+    ? 'Text Only is on everywhere except the list below.'
+    : 'Text Only is off everywhere except the list below.';
   els.listTitle.textContent = excluding ? 'Excluded sites' : 'Whitelisted sites';
 
   els.siteList.textContent = '';
@@ -119,8 +119,8 @@ function renderList() {
     settings.sites.length > 0
       ? ''
       : excluding
-        ? 'No exclusions — text mode is on for every site.'
-        : 'Empty whitelist — text mode is off for every site.';
+        ? 'No exclusions — Text Only is on for every site.'
+        : 'Empty whitelist — Text Only is off for every site.';
 }
 
 function renderSiteRow(host) {
@@ -135,10 +135,10 @@ function renderSiteRow(host) {
   els.siteHint.textContent =
     settings.defaultMode === 'on'
       ? listed
-        ? 'Excluded from text mode'
+        ? 'Excluded from Text Only'
         : 'Following the on-by-default rule'
       : listed
-        ? 'Whitelisted for text mode'
+        ? 'Whitelisted for Text Only'
         : 'Not in the whitelist';
 }
 
@@ -149,7 +149,7 @@ function renderStatus(host) {
   }
   if (!settings.enabled) {
     els.enabledLabel.textContent = 'Paused';
-    setStatus('idle', 'Text mode is paused everywhere');
+    setStatus('idle', 'Text Only is paused everywhere');
     return;
   }
   els.enabledLabel.textContent = 'Enabled';
@@ -158,9 +158,9 @@ function renderStatus(host) {
     return;
   }
   if (decide(settings, host)) {
-    setStatus('ok', `Text mode is active on ${host}`);
+    setStatus('ok', `Text Only is active on ${host}`);
   } else {
-    setStatus('idle', `Text mode is off on ${host}`);
+    setStatus('idle', `Text Only is off on ${host}`);
   }
 }
 

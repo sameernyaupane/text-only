@@ -9,7 +9,7 @@
 
 const DEFAULTS = {
   enabled: true, // master switch, like simple-auto-hd's extensionEnabled
-  defaultMode: 'on', // 'on' = text mode everywhere except listed sites; 'off' = only listed sites
+  defaultMode: 'on', // 'on' = Text Only everywhere except listed sites; 'off' = only listed sites
   sites: [], // domains; meaning flips with defaultMode (exclusions vs whitelist)
   blockVideo: true, // also redirect <video>/media and object requests
   theme: 'system', // popup appearance: system | light | dark
@@ -166,7 +166,7 @@ async function toggleSite(url) {
 
 chrome.runtime.onInstalled.addListener(() => {
   seedDefaults().then(applyRules);
-  chrome.contextMenus.create({ id: MENU_TOGGLE, title: 'Toggle Text Mode on this site', contexts: ['page', 'image', 'video'] });
+  chrome.contextMenus.create({ id: MENU_TOGGLE, title: 'Toggle Text Only on this site', contexts: ['page', 'image', 'video'] });
   chrome.contextMenus.create({ id: MENU_SETTINGS, title: 'Text Only settings', contexts: ['action'] });
 });
 

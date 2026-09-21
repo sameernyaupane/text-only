@@ -8,30 +8,30 @@
  * hidden inline SVG/video, kept layout.
  ****************************************************************/
 
-html[data-text-mode='on'] body {
+html[data-text-only='on'] body {
   filter: grayscale(1);
   background: #fff !important;
 }
 
-html[data-text-mode='on'] *,
-html[data-text-mode='on'] *::before,
-html[data-text-mode='on'] *::after {
+html[data-text-only='on'] *,
+html[data-text-only='on'] *::before,
+html[data-text-only='on'] *::after {
   background-image: none !important;
   box-shadow: none !important;
   text-shadow: none !important;
 }
 
 /* visibility (not display) keeps the layout boxes intact. */
-html[data-text-mode='on'] video,
-html[data-text-mode='on'] svg,
-html[data-text-mode='on'] canvas,
-html[data-text-mode='on'] embed,
-html[data-text-mode='on'] object {
+html[data-text-only='on'] video,
+html[data-text-only='on'] svg,
+html[data-text-only='on'] canvas,
+html[data-text-only='on'] embed,
+html[data-text-only='on'] object {
   visibility: hidden !important;
 }
 
 /* Photos already collapsed to the 1px placeholder must not stretch
    their alt text cell weirdly; keep them to their box. */
-html[data-text-mode='on'] img {
+html[data-text-only='on'] img {
   color: transparent;
 }

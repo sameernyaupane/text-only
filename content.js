@@ -2,7 +2,7 @@
  * Text Only — content script
  *
  * Runs at document_start in every frame. Asks the background for this
- * frame's decision, stamps data-text-mode on <html> (content.css reacts
+ * frame's decision, stamps data-text-only on <html> (content.css reacts
  * to the attribute), and scrubs what CSS cannot reach: data:/blob:
  * image sources and dynamically inserted media.
  ****************************************************************/
@@ -20,7 +20,7 @@ function setDataAttribute() {
 
 function scrubOne(el) {
   if (el instanceof HTMLImageElement) el.src = state.blankUrl;
-  else if (el instanceof SVGSVGElement) el.setAttribute('data-text-mode-scrubbed', '');
+  else if (el instanceof SVGSVGElement) el.setAttribute('data-text-only-scrubbed', '');
   else if (el instanceof HTMLVideoElement) {
     try {
       el.pause();
