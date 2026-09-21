@@ -7,14 +7,17 @@
  * this handles rendering.
  *
  * Dark Reader coexistence: html[data-dr] is stamped when Dark Reader
- * is detected on the page. Under it, Text Only keeps only the media
- * removal and background-image stripping — color work (background,
- * grayscale, shadows) is left entirely to Dark Reader, so the two
- * extensions compose instead of fighting over the same properties.
+ * is detected on the page. Grayscale always applies — it composes with
+ * any Dark Reader mode. What yields under data-dr is background and
+ * shadow control (the properties Dark Reader itself manages), so the
+ * page stays dark instead of being forced white.
  ****************************************************************/
 
-html[data-text-only='on']:not([data-dr]) body {
+html[data-text-only='on'] body {
   filter: grayscale(1);
+}
+
+html[data-text-only='on']:not([data-dr]) body {
   background: #fff !important;
 }
 
