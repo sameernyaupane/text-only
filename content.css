@@ -4,11 +4,16 @@
  * The attribute is stamped by content.js at document_start, before
  * first paint, so there is no flash of images. Network images and
  * media are already replaced/blocked by declarativeNetRequest rules;
- * this handles rendering: grayscale, killed background images,
- * hidden inline SVG/video, kept layout.
+ * this handles rendering.
+ *
+ * Dark Reader coexistence: html[data-dr] is stamped when Dark Reader
+ * is detected on the page. Under it, Text Only keeps only the media
+ * removal and background-image stripping — color work (background,
+ * grayscale, shadows) is left entirely to Dark Reader, so the two
+ * extensions compose instead of fighting over the same properties.
  ****************************************************************/
 
-html[data-text-only='on'] body {
+html[data-text-only='on']:not([data-dr]) body {
   filter: grayscale(1);
   background: #fff !important;
 }
@@ -17,6 +22,11 @@ html[data-text-only='on'] *,
 html[data-text-only='on'] *::before,
 html[data-text-only='on'] *::after {
   background-image: none !important;
+}
+
+html[data-text-only='on']:not([data-dr]) *,
+html[data-text-only='on']:not([data-dr]) *::before,
+html[data-text-only='on']:not([data-dr]) *::after {
   box-shadow: none !important;
   text-shadow: none !important;
 }
